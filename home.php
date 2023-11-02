@@ -129,7 +129,7 @@ require_once "db_functions.php";
                                     <a href="#" class="list"><i class="fa fa-list"></i></a>
                                 </div>
                             </div>
-                        </div> <!-- /. content-header -->
+                        </div> 
                         <div class="properties">
                             <div class="row">
                                 <div class="col-md-4 col-sm-6">
