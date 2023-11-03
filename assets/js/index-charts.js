@@ -317,9 +317,12 @@ jQuery(function() {
 	});
 
 	function updateChartsAndUI(records) {
+		let i = 0;
 		const labels = records.map(rec => `${rec.firstname} ${rec.lastname}`);
-		const buyPrices = records.map((record) => record.buyPrice);
-		const sellPrices = records.map(record => record.sellPrice);
+		const buyPrices = records.map(rec => rec.buyPrice);
+		const sellPrices = records.map(rec => rec.sellPrice);
+		
+		console.log(records.length);
 		const sumOfBuyPrices = buyPrices.reduce((total, price) => total + parseFloat(price), 0);
 		const sumOfSellPrices = sellPrices.reduce((total, price) => total + parseFloat(price), 0);
 		const profitRatio = (sumOfSellPrices - sumOfBuyPrices) / sumOfBuyPrices * 100;
@@ -327,7 +330,15 @@ jQuery(function() {
 		$("#total_buy_price").text("$" + sumOfBuyPrices.toLocaleString());
 		$("#total_sell_price").text("$" + sumOfSellPrices.toLocaleString());
 		$("#profit_ratio").text(profitRatio.toFixed(2) + "%");
-	
+		$('#count').text(records.length);
+		$("#display_notes").empty();
+		records.map(record => {
+			$.post("read_takers.php", {email: record.email}, function(data, status) {
+				const fullName = JSON.parse(data);
+				$("#display_notes").append(`<tr><td>${fullName[0].firstname} ${fullName[0].lastname}</td><td>${record.note}</td></tr>`);
+			});
+		});
+		
 		barChartConfig.data.labels = labels;
 		barChartConfig.data.datasets[0].data = buyPrices;
 		barChartConfig.data.datasets[1].data = sellPrices;
@@ -342,28 +353,28 @@ jQuery(function() {
 	}
 
 	
-    // Get references to the select all checkbox and other checkboxes
-    var selectAllCheckbox = document.getElementById('select_all_check');
-    var otherCheckboxes = document.querySelectorAll('.other-checkbox');
+    // // Get references to the select all checkbox and other checkboxes
+    // var selectAllCheckbox = document.getElementById('select_all_check');
+    // var otherCheckboxes = document.querySelectorAll('.other-checkbox');
 
-    // Add event listener to the select all checkbox
-    selectAllCheckbox.addEventListener('change', function() {
-        // Iterate through other checkboxes and set their checked property to match the select all checkbox
-		debugger;
-        for (var i = 0; i < otherCheckboxes.length; i++) {
-            otherCheckboxes[i].checked = selectAllCheckbox.checked;
-        }
-    });
+    // // Add event listener to the select all checkbox
+    // selectAllCheckbox.addEventListener('change', function() {
+    //     // Iterate through other checkboxes and set their checked property to match the select all checkbox
+	// 	debugger;
+    //     for (var i = 0; i < otherCheckboxes.length; i++) {
+    //         otherCheckboxes[i].checked = selectAllCheckbox.checked;
+    //     }
+    // });
 
-    // Add event listeners to other checkboxes to uncheck the select all checkbox if any of them is unchecked
-    for (var i = 0; i < otherCheckboxes.length; i++) {
-        otherCheckboxes[i].addEventListener('change', function() {
-            // If any other checkbox is unchecked, uncheck the select all checkbox
-            if (!this.checked) {
-                selectAllCheckbox.checked = false;
-            }
-        });
-    }
+    // // Add event listeners to other checkboxes to uncheck the select all checkbox if any of them is unchecked
+    // for (var i = 0; i < otherCheckboxes.length; i++) {
+    //     otherCheckboxes[i].addEventListener('change', function() {
+    //         // If any other checkbox is unchecked, uncheck the select all checkbox
+    //         if (!this.checked) {
+    //             selectAllCheckbox.checked = false;
+    //         }
+    //     });
+    // }
 
 
 });

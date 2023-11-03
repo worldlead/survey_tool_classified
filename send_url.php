@@ -5,12 +5,10 @@ require_once 'brevomail.php';
 require_once 'db_functions.php';
 $conn = connectDB();
 
-if (isset($_POST['send_url'])) {
+if (isset($_GET['send'])) {
 
     $records = Read_record($conn, "survey_takers", "");
-    $podioLink = $_POST['podio_link'];
-    
-
+    $podioLink = "";
     foreach ($records as $record) {
         $email = $record['email'];
         $token = bin2hex(random_bytes(32));
@@ -20,7 +18,7 @@ if (isset($_POST['send_url'])) {
 
         $expires = 'DATE_ADD(NOW(), INTERVAL 1 HOUR)';
         $query = $conn->prepare("INSERT INTO survey_tokens (email, token, podio_link, created_at, expires_at)
-                                VALUES (:email, :token, :podio_link, NOW(), " . $expires . ") ON DUPLICATE KEY UPDATE token = VALUES(token), podio_link = VALUES(podio_link)");
+                                VALUES (:email, :token, :podio_link, NOW(), " . $expires . ") ON DUPLICATE KEY UPDATE token = VALUES(token)");
         $query->execute([
             "email" => $email,
             "token" => $token,
@@ -45,7 +43,7 @@ if (isset($_POST['send_url'])) {
             </body>
             ";
             $sendmailer->sendNotification($recipient, $fullname, $emailContent);
-            header("Location: home.php");
+            header("Location: home.php?showAlert=true");
         } catch (Exception $e) {
 
             // for public use

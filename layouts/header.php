@@ -8,7 +8,7 @@ session_start();
         <title>Survey Tools</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon" />
+       
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css' />
         <link rel="stylesheet" href="assets/libraries/font-awesome/css/font-awesome.min.css" />
         <!-- Start BOOTSTRAP -->
@@ -35,4 +35,5 @@ session_start();
         <link rel="stylesheet" href="assets/css/custom_template_style.css" /> 
         <!-- End custom template style   -->
         <link rel='stylesheet' href='assets/css/palette.css'>
+      
     </head>

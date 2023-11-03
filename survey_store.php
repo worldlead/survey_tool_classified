@@ -7,25 +7,26 @@ $conn = connectDB();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $validator = test_input($_POST['validator']);
+    $selectedPlace = test_input($_POST['selected_area']);
     $buyPrice = test_input($_POST['buy_price']);
     $sellPrice = test_input($_POST['sell_price']);
-    $notes = test_input($_POST['notes']);
+    $note = test_input($_POST['note']);
     
-    $stmt = $conn->query("SELECT email, podio_link FROM survey_tokens WHERE token = '" . $validator. "'");
+    $stmt = $conn->query("SELECT email FROM survey_tokens WHERE token = '" . $validator. "'");
 	$res = $stmt->fetch();
     
-    $query = $conn->prepare("INSERT INTO survey (podio_link, email, buyPrice, sellPrice, notes) VALUES (:podio_link, :email, :buyPrice, :sellPrice, :notes)");
+    $query = $conn->prepare("INSERT INTO survey (podio_link, email, buyPrice, sellPrice, note) VALUES (:podio_link, :email, :buyPrice, :sellPrice, :note)");
 
     $query->execute([
-        "podio_link" => $res['podio_link'],
+        "podio_link" => $selectedPlace,
         "email" => $res['email'],
         "buyPrice" => $buyPrice,
         "sellPrice" => $sellPrice,
-        "notes" => $notes
+        "note" => $note
     ]);
     
 }
 
-header('location: survey.php');
+header('location: survey.php?validator='.$validator);
 
 $conn = null;
