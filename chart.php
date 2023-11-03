@@ -7,7 +7,7 @@ $conn = connectDB();
 <body class="">
     <div id="fb-root"></div>
     <div class="container container-wrapper">
-    <header class="header">
+        <header class="header">
             <div class="top-box" data-toggle="sticky-onscroll">
                 <div class="container">
                     <div class="top-bar color-primary">
@@ -40,7 +40,7 @@ $conn = connectDB();
                     </section>
                 </div>
             </div>
-           
+
         </header>
 
         <main class="main section-color-primary pt-3">
@@ -98,47 +98,31 @@ $conn = connectDB();
                     </div><!--//col-->
                 </div><!--//row-->
                 <div class="row g-4 mb-4">
-                    <div class="widget widget-box box-container">
-                        <div class="widget-header text-uppercase">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <h3 class="app-card-title">Buy/Sale</h3>
-                                </div><!--//col-->
-                            </div><!--//row-->
-                        </div><!--//app-card-header-->
-                        <div class="app-card-body p-3 p-lg-4">
-                            <div class="row form-group">
-                                <div class="col-md-6">
-                                    <?php
-                                    $rows = Read_record($conn, "land_info", "");
-                                    ?>
-                                    <label class="form-label" for="area_select">Select an area</label>
-                                    <select class="form-control" id="area_select" style="background-color: aliceblue;">
-                                        <?php
-                                        foreach ($rows as $row) {
-                                            echo "<option value='" . $row['podio_link'] . "'>" . $row['county'] . ", " .$row['state_country']. "</option>";
-                                        }
-                                        ?>
+                    <div class="col-6 col-md-6">
+                        <div class="widget widget-box box-container">
+                            <div class="widget-header text-uppercase">
+                                <div class="row justify-content-between align-items-center">
+                                    <div class="col-auto">
+                                        <h3 class="app-card-title">Total</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="app-card-body p-3 p-lg-4">
+                                <div class="mb-3 d-flex">
+                                    <select class="form-select form-select-sm ms-auto d-inline-flex w-auto">
+                                        <option value="1" selected>This week</option>
+                                        <option value="2">Today</option>
+                                        <option value="3">This Month</option>
+                                        <option value="3">This Year</option>
                                     </select>
                                 </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="chart-container col-sm-3 col-md-3">
+                                <div class="chart-container">
                                     <canvas id="canvas-barchart-total"></canvas>
                                 </div>
-                                <div class="chart-container col-md-9">
-                                    <canvas id="canvas-barchart"></canvas>
-                                </div>
                             </div>
-                        </div><!--//app-card-body-->
-                    </div><!--//app-card-->
-                    <!-- </div> -->
-
-
-                </div><!--//container-fluid-->
-                <div class="row g-4 mb-4">
-                    <div class="col-12 col-lg-12">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6">
                         <div class="widget widget-box box-container">
                             <div class="widget-header text-uppercase">
                                 <div class="row justify-content-between align-items-center">
@@ -158,6 +142,42 @@ $conn = connectDB();
                                 </div>
                                 <div class="chart-container">
                                     <canvas id="canvas-linechart"></canvas>
+                                </div>
+                            </div><!--//app-card-body-->
+                        </div><!--//app-card-->
+                    </div>
+                </div><!--//container-fluid-->
+                <div class="row g-4 mb-4">
+                    <div class="col-12 col-lg-12">
+                        <div class="widget widget-box box-container">
+                            <div class="widget-header text-uppercase">
+                                <div class="row justify-content-between align-items-center">
+                                    <div class="col-auto">
+                                        <h3 class="app-card-title">Buy/Sale</h3>
+                                    </div><!--//col-->
+                                </div><!--//row-->
+                            </div><!--//app-card-header-->
+                            <div class="app-card-body p-3 p-lg-4">
+                                <div class="row form-group">
+                                    <div class="col-md-6">
+                                        <?php
+                                        $rows = Read_record($conn, "land_info", "");
+                                        ?>
+                                        <label class="form-label" for="area_select">Select an area</label>
+                                        <select class="form-control" id="area_select" style="background-color: aliceblue;">
+                                            <?php
+                                            foreach ($rows as $row) {
+                                                echo "<option value='" . $row['podio_link'] . "'>" . $row['county'] . ", " . $row['state_country'] . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="chart-container">
+                                        <canvas id="canvas-barchart"></canvas>
+                                    </div>
                                 </div>
                             </div><!--//app-card-body-->
                         </div><!--//app-card-->

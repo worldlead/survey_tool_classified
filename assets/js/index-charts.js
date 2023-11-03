@@ -57,7 +57,7 @@ jQuery(function() {
 		},
 		options: {
 			responsive: true,	
-			aspectRatio: 2,
+			aspectRatio: 1.5,
 			
 			legend: {
 				display: true,
@@ -228,7 +228,7 @@ jQuery(function() {
 		},
 		options: {
 			responsive: true,
-			aspectRatio: 0.46,
+			aspectRatio: 1.5,
 			legend: {
 				position: 'bottom',
 				align: 'end',
@@ -294,11 +294,12 @@ jQuery(function() {
 			var barChart = document.getElementById('canvas-barchart').getContext('2d');
 			window.myBar = new Chart(barChart, barChartConfig);
 			
-			var totalBarChart = document.getElementById('canvas-barchart-total').getContext('2d');
-			window.myTotalBar = new Chart(totalBarChart, totalBarChartConfig);
-
+			
 			var lineChart = document.getElementById('canvas-linechart').getContext('2d');
 			window.myLine = new Chart(lineChart, lineChartConfig);
+
+			var totalBarChart = document.getElementById('canvas-barchart-total').getContext('2d');
+			window.myTotalBar = new Chart(totalBarChart, totalBarChartConfig);
 		});
 	});	
 
@@ -331,13 +332,13 @@ jQuery(function() {
 		barChartConfig.data.datasets[0].data = buyPrices;
 		barChartConfig.data.datasets[1].data = sellPrices;
 	
-		totalBarChartConfig.data.datasets[0].data = [sumOfBuyPrices];
-		totalBarChartConfig.data.datasets[1].data = [sumOfSellPrices];
-
+		
 		lineChartConfig.data.labels = labels;
 		lineChartConfig.data.datasets[0].data = buyPrices;
 		lineChartConfig.data.datasets[1].data = sellPrices;
 		
+		totalBarChartConfig.data.datasets[0].data = [sumOfBuyPrices];
+		totalBarChartConfig.data.datasets[1].data = [sumOfSellPrices];
 	}
 
 	
